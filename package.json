@@ -6,20 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:barrels": "barrelsby --config barrelsby.json",
+    "watch:barrels": "chokidar \"src/**/*.{ts,tsx}\" -i '**/index.ts' -c \"npm run generate:barrels\""
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.8.1",
-    "@emotion/react": "^11.11.1",
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^2.10.9",
+    "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^5.1.1",
     "@reduxjs/toolkit": "^2.8.2",
     "date-fns": "^4.1.0",
     "framer-motion": "^10.12.16",
     "next": "14.0.0",
+    "next-themes": "^0.4.6",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.61.1",
+    "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "zod": "^4.0.8"
   },
@@ -27,6 +32,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "barrelsby": "^2.8.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",
     "typescript": "^5"

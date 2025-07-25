@@ -6,7 +6,7 @@
     "title": "Tonkatsu",
     "instructions": "Season pork cutlets with salt and pepper. Coat with flour, then dip in beaten egg, then panko breadcrumbs. Deep-fry at 180°C until golden brown on both sides. Serve with shredded cabbage and tonkatsu sauce.",
     "image": "tonkatsu.jpg",
-    "dateAdded": "2025-07-23T14:00:00.000Z",
+    "dateCreated": "2025-07-23T14:00:00.000Z",
     "isFavorite": true
   },
   {
@@ -16,7 +16,7 @@
     "title": "Bibimbap",
     "instructions": "Cook rice and prepare assorted vegetables like spinach, bean sprouts, carrots, and mushrooms. Sauté each with sesame oil and garlic. Serve rice in a bowl with toppings, gochujang, and a fried egg. Mix before eating.",
     "image": "bibimbap.jpg",
-    "dateAdded": "2025-07-20T17:30:00.000Z",
+    "dateCreated": "2025-07-20T17:30:00.000Z",
     "isFavorite": false
   }
 ]

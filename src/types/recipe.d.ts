@@ -5,6 +5,6 @@ export interface Recipe {
   title: string;
   instructions: string;
   image: string;
-  dateAdded: string;
+  dateCreated: string;
   isFavorite: boolean;
 }

@@ -1,0 +1,10 @@
+{
+  "directory": [
+    "./src/components",
+    "./src/lib",
+    "./src/types"
+  ],
+  "delete": true,
+  "extension": "ts",
+  "exportDefault": true
+}
