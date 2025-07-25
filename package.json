@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate:barrels": "barrelsby --config barrelsby.json",
+    "generate:barrels:components": "barrelsby --config barrelsby.components.json",
+    "generate:barrels:others": "barrelsby --config barrelsby.others.json",
+    "generate:barrels": "npm run generate:barrels:components && npm run generate:barrels:others",
     "watch:barrels": "chokidar \"src/**/*.{ts,tsx}\" -i '**/index.ts' -c \"npm run generate:barrels\""
   },
   "dependencies": {
@@ -33,6 +35,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "barrelsby": "^2.8.1",
+    "chokidar-cli": "^3.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",
     "turbo": "^2.5.5",

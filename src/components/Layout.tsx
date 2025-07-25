@@ -1,15 +1,16 @@
 import { Box, Container, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { Header } from "@/components";
+import { BackButton, Header } from "@/components";
 import { LayoutProps } from "@/types";
 
 export default function Layout(props: LayoutProps) {
   const { children } = props;
   const router = useRouter();
+  const isHome = router.pathname === "/";
 
   return (
     <Flex direction="column" minH="100vh">
-      <Header showSearch={router.pathname === "/"} />
+      <Header showSearch={isHome} />
       <Flex
         as="main"
         bg="gray.100"
@@ -28,6 +29,7 @@ export default function Layout(props: LayoutProps) {
           maxWidth="container.xl"
           width="100%"
         >
+          {!isHome && <BackButton />}
           {children}
         </Container>
       </Flex>

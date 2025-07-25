@@ -17,7 +17,11 @@ export default function Header(props: HeaderProps) {
         <Flex direction={{ base: "column", lg: "row" }} gap={4}>
           <Box display={{ base: "none", lg: "block" }} flex="1" />
           <Box display={{ base: "none", lg: "block" }} flex="1" />
-          {showSearch && <TitleSearch />}
+          {showSearch ? (
+            <TitleSearch />
+          ) : (
+            <Box display="block" flex="1" minH="40px" w="100%" />
+          )}
         </Flex>
       </Container>
     </Box>

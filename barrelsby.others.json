@@ -1,11 +1,11 @@
 {
   "directory": [
-    "./src/components",
     "./src/constants",
     "./src/lib",
     "./src/types"
   ],
+  "barrelName": "index.ts",
   "delete": true,
   "extension": "ts",
-  "exportDefault": true
+  "structure": "flat"
 }

@@ -1,0 +1,10 @@
+{
+  "directory": [
+    "./src/components"
+  ],
+  "barrelName": "index.ts",
+  "delete": true,
+  "extension": "ts",
+  "structure": "flat",
+  "exportDefault": true
+}

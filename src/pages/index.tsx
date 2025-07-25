@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, useBreakpointValue } from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -17,10 +10,10 @@ import {
   RecipeList,
 } from "@/components";
 import recipeData from "@/data/recipes.json";
-import { Recipe } from "@/types";
+import { RecipeProps } from "@/types";
 
 export default function Home() {
-  const recipes: Recipe[] = recipeData;
+  const recipes: RecipeProps[] = recipeData;
   const [contentHeight, setContentHeight] = useState(0);
 
   const paddingOffset =
@@ -74,7 +67,7 @@ export default function Home() {
             <Box
               bg="white"
               borderRadius={15}
-              boxShadow="md"
+              boxShadow="sm"
               css={{
                 scrollbarWidth: "none",
                 "&::-webkit-scrollbar": {

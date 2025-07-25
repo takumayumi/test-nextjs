@@ -4,6 +4,8 @@
 
 export { default as AddButton } from "./AddButton";
 export * from "./AddButton";
+export { default as BackButton } from "./BackButton";
+export * from "./BackButton";
 export { default as FilterBar } from "./FilterBar";
 export * from "./FilterBar";
 export { default as Header } from "./Header";
