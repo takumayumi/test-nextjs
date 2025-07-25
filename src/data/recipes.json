@@ -18,5 +18,25 @@
     "image": "bibimbap.jpg",
     "dateCreated": "2025-07-20T17:30:00.000Z",
     "isFavorite": false
+  },
+  {
+    "id": "3",
+    "name": "Liza Dela Cruz",
+    "email": "liza@example.ph",
+    "title": "Sinigang na Baboy",
+    "instructions": "In a pot, boil pork ribs in water until tender. Skim off scum. Add chopped tomatoes, onions, and gabi (taro). Simmer until gabi is soft. Add tamarind mix or fresh sampalok, followed by radish, eggplant, and string beans. Add kangkong last. Season with fish sauce and serve hot with rice.",
+    "image": "sinigang.jpg",
+    "dateCreated": "2025-07-25T12:15:00.000Z",
+    "isFavorite": true
+  },
+  {
+    "id": "4",
+    "name": "Camille Laurent",
+    "email": "camille@example.fr",
+    "title": "Crème Brûlée",
+    "instructions": "Preheat oven to 150°C. In a saucepan, heat heavy cream and vanilla until warm. In a bowl, whisk egg yolks with sugar until pale. Slowly mix the warm cream into the yolks. Pour mixture into ramekins. Bake in a water bath for 30–40 minutes until set. Chill, then sprinkle sugar on top and caramelize with a torch before serving.",
+    "image": "creme-brulee.jpg",
+    "dateCreated": "2025-07-25T14:05:00.000Z",
+    "isFavorite": true
   }
 ]

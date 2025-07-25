@@ -1,37 +1,13 @@
-import { Box, Button, Checkbox, Flex, Input, Select } from "@chakra-ui/react";
-import { FilterBarProps } from "@/types";
+import { Button, Flex } from "@chakra-ui/react";
+import { DateSortSelect, FavoriteRadio, TitleSortSelect } from "@/components";
 
-export default function FilterBar(props: FilterBarProps) {
-  const { onSearchChange, onSortChange, onFilterFavoritesChange, onReset } =
-    props;
-
+export default function FilterBar() {
   return (
-    <Box>
-      <Flex flexWrap="wrap">
-        <Input
-          placeholder="Search by title"
-          onChange={(e) => onSearchChange?.(e.target.value)}
-        />
-        <Select
-          placeholder="Sort by"
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            onSortChange?.(e.target.value)
-          }
-        >
-          <option value="title-asc">Title (A-Z)</option>
-          <option value="title-desc">Title (Z-A)</option>
-          <option value="date-asc">Date (Oldest)</option>
-          <option value="date-desc">Date (Newest)</option>
-        </Select>
-        <Checkbox
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onFilterFavoritesChange?.(e.target.checked)
-          }
-        >
-          Favorites Only
-        </Checkbox>
-        <Button onClick={onReset}>Clear Filters</Button>
-      </Flex>
-    </Box>
+    <Flex direction={{ base: "row", lg: "column" }} gap={4}>
+      <TitleSortSelect />
+      <DateSortSelect />
+      <FavoriteRadio />
+      <Button>Clear Filters</Button>
+    </Flex>
   );
 }

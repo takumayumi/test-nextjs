@@ -1,41 +1,33 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Textarea,
-} from "@chakra-ui/react";
+import { Box, Button, Field, Input, Textarea } from "@chakra-ui/react";
 
 export default function RecipeForm() {
   return (
     <Box as="form">
-      <FormControl>
-        <FormLabel>Name</FormLabel>
+      <Field.Root>
+        <Field.Label>Name</Field.Label>
         <Input type="text" />
-        <FormErrorMessage>Error</FormErrorMessage>
-      </FormControl>
-      <FormControl>
-        <FormLabel>Email</FormLabel>
+        <Field.ErrorText>Error</Field.ErrorText>
+      </Field.Root>
+      <Field.Root>
+        <Field.Label>Email</Field.Label>
         <Input type="email" />
-        <FormErrorMessage>Error</FormErrorMessage>
-      </FormControl>
-      <FormControl>
-        <FormLabel>Title</FormLabel>
+        <Field.ErrorText>Error</Field.ErrorText>
+      </Field.Root>
+      <Field.Root>
+        <Field.Label>Title</Field.Label>
         <Input type="text" />
-        <FormErrorMessage>Error</FormErrorMessage>
-      </FormControl>
-      <FormControl>
-        <FormLabel>Instructions</FormLabel>
+        <Field.ErrorText>Error</Field.ErrorText>
+      </Field.Root>
+      <Field.Root>
+        <Field.Label>Instructions</Field.Label>
         <Textarea />
-        <FormErrorMessage>Error</FormErrorMessage>
-      </FormControl>
-      <FormControl>
-        <FormLabel>Image</FormLabel>
+        <Field.ErrorText>Error</Field.ErrorText>
+      </Field.Root>
+      <Field.Root>
+        <Field.Label>Image</Field.Label>
         <Input type="file" />
-        <FormErrorMessage>Error</FormErrorMessage>
-      </FormControl>
+        <Field.ErrorText>Error</Field.ErrorText>
+      </Field.Root>
       <Button type="submit">Submit</Button>
     </Box>
   );

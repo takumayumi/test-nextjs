@@ -1,0 +1,25 @@
+import { Box, Container, Flex } from "@chakra-ui/react";
+import { TitleSearch } from "@/components";
+import { HeaderProps } from "@/types";
+
+export default function Header(props: HeaderProps) {
+  const { showSearch } = props;
+
+  return (
+    <Box
+      bg="blue.700"
+      id="header"
+      px={{ base: 4, lg: 6 }}
+      py={{ base: 6, lg: 8 }}
+      flex="none"
+    >
+      <Container maxWidth="container.xl">
+        <Flex direction={{ base: "column", lg: "row" }} gap={4}>
+          <Box display={{ base: "none", lg: "block" }} flex="1" />
+          <Box display={{ base: "none", lg: "block" }} flex="1" />
+          {showSearch && <TitleSearch />}
+        </Flex>
+      </Container>
+    </Box>
+  );
+}

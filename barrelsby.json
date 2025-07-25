@@ -1,6 +1,7 @@
 {
   "directory": [
     "./src/components",
+    "./src/constants",
     "./src/lib",
     "./src/types"
   ],

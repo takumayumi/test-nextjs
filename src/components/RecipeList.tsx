@@ -5,9 +5,14 @@ import { Recipe } from "@/types";
 export default function RecipeList({ recipes }: { recipes: Recipe[] }) {
   return (
     <Box>
-      <Stack spacing={4}>
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+      <Stack>
+        {recipes.map((recipe, index) => (
+          <RecipeCard
+            key={recipe.id}
+            isFirst={index === 0}
+            isLast={index === recipes.length - 1}
+            recipe={recipe}
+          />
         ))}
       </Stack>
     </Box>
