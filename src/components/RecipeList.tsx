@@ -1,16 +1,16 @@
 import { Box, Stack } from "@chakra-ui/react";
 import { RecipeCard } from "@/components";
-import { Recipe } from "@/types";
+import { RecipeProps } from "@/types";
 
-export default function RecipeList({ recipes }: { recipes: Recipe[] }) {
+export default function RecipeList({ recipes }: { recipes: RecipeProps[] }) {
   return (
     <Box>
       <Stack>
         {recipes.map((recipe, index) => (
           <RecipeCard
-            key={recipe.id}
             isFirst={index === 0}
             isLast={index === recipes.length - 1}
+            key={recipe.id}
             recipe={recipe}
           />
         ))}

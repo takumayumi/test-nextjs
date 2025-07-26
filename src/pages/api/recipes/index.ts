@@ -1,9 +1,9 @@
-import formidable, { File } from "formidable";
-import { NextApiRequest, NextApiResponse } from "next";
+import formidable from "formidable";
 import fs from "fs";
+import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
-import { RecipeProps, schema } from "@/types";
-import { ZodError } from "zod";
+import { getMissingFields, sanitizeField } from "@/lib";
+import { RecipeProps } from "@/types";
 
 export const config = {
   api: {
@@ -46,28 +46,24 @@ export default async function handler(
         return res.status(500).json({ success: false, message: "Form error" });
       }
 
-      const imagePath = fields.imagePath?.[0] || "";
-      const name = fields.name?.[0] || "";
-      const email = fields.email?.[0] || "";
-      const title = fields.title?.[0] || "";
-      const description = fields.description?.[0] || "";
-      const ingredients = fields.ingredients?.[0] || "";
-      const instructions = fields.instructions?.[0] || "";
+      const imagePath = sanitizeField(fields.imagePath);
+      const name = sanitizeField(fields.name);
+      const email = sanitizeField(fields.email);
+      const title = sanitizeField(fields.title);
+      const description = sanitizeField(fields.description);
+      const ingredients = sanitizeField(fields.ingredients);
+      const instructions = sanitizeField(fields.instructions);
 
-      const missingFields = [];
-      if (!imagePath) missingFields.push("imagePath");
-      if (!name) missingFields.push("name");
-      if (!email) missingFields.push("email");
-      if (!title) missingFields.push("title");
-      if (!ingredients) missingFields.push("ingredients");
-      if (!instructions) missingFields.push("instructions");
+      const requiredFields = {
+        imagePath,
+        name,
+        email,
+        title,
+        ingredients,
+        instructions,
+      };
 
-      if (missingFields.length > 0) {
-        return res.status(400).json({
-          success: false,
-          message: `Missing: ${missingFields.join(", ")}`,
-        });
-      }
+      getMissingFields(requiredFields, res);
 
       const newRecipe: RecipeProps = {
         id: generateUniqueId(),

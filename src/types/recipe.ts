@@ -10,3 +10,7 @@ export interface RecipeProps {
   dateCreated: string;
   isFavorite: boolean;
 }
+
+export interface RecipePageProps {
+  recipe: RecipeProps | null;
+}

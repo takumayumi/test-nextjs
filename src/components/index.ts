@@ -28,6 +28,8 @@ export { default as TitleSearch } from "./filter-ui/TitleSearch";
 export * from "./filter-ui/TitleSearch";
 export { default as TitleSortSelect } from "./filter-ui/TitleSortSelect";
 export * from "./filter-ui/TitleSortSelect";
+export { default as DeleteButton } from "./form-ui/DeleteButton";
+export * from "./form-ui/DeleteButton";
 export { default as FormField } from "./form-ui/FormField";
 export * from "./form-ui/FormField";
 export { default as ImageUpload } from "./form-ui/ImageUpload";

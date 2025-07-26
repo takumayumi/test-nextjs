@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { ImageUploadProps } from "@/types";
 
 export default function ImageUpload(props: ImageUploadProps) {
-  const { error, onChange, resetKey } = props;
+  const { error, initialImage, onChange, resetKey } = props;
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,10 +56,10 @@ export default function ImageUpload(props: ImageUploadProps) {
           />
         ) : (
           <Image
-            alt="Upload image"
+            alt={initialImage || "Upload image"}
             height={400}
             priority={true}
-            src="/unknown.png"
+            src={initialImage ? `/images/${initialImage}` : "/unknown.png"}
             width={456}
           />
         )}

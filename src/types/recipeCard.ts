@@ -1,8 +1,8 @@
-import { Recipe } from "@/types";
+import { RecipeProps } from "@/types";
 
 export type RecipeCardProps = {
   isFirst?: boolean;
   isLast?: boolean;
   onToggleFavorite?: (id: string) => void;
-  recipe: Recipe;
+  recipe: RecipeProps;
 };

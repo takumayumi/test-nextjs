@@ -2,34 +2,44 @@ import { Button, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FormField, ImageUpload, toaster } from "@/components";
+import { DeleteButton, FormField, ImageUpload, toaster } from "@/components";
 import { checkDuplicateTitle, submitRecipeForm, validate } from "@/lib";
-import { RecipeFormData } from "@/types";
+import { RecipeFormData, RecipeFormProps } from "@/types";
 
-export default function RecipeForm() {
+export default function RecipeForm(props: RecipeFormProps) {
+  const { initialValues, onDelete } = props;
   const router = useRouter();
   const [resetKey, setResetKey] = useState<string>("");
+
+  const defaultValues = {
+    id: null,
+    imagePath: null,
+    name: "",
+    email: "",
+    title: "",
+    description: "",
+    ingredients: "",
+    instructions: "",
+    ...initialValues,
+  };
 
   const handleSubmit = async (
     values: RecipeFormData,
     { resetForm }: { resetForm: () => void }
   ) => {
-    const isDuplicate = await checkDuplicateTitle(values.title);
-
-    if (isDuplicate) {
-      toaster.create({
-        type: "error",
-        title: "Duplicate title",
-        description: "A recipe with that title already exists.",
-        closable: true,
-      });
-      return;
+    let isDuplicate = false;
+    if (!defaultValues.id) {
+      isDuplicate = await checkDuplicateTitle(values.title);
     }
+    if (isDuplicate) return;
 
     try {
       await submitRecipeForm(values, toaster);
-      resetForm();
-      setResetKey(Date.now().toString());
+
+      if (!defaultValues.id) {
+        resetForm();
+        setResetKey(Date.now().toString());
+      }
     } catch (err) {
       console.error("Submission error:", err);
     }
@@ -37,19 +47,12 @@ export default function RecipeForm() {
 
   return (
     <Formik<RecipeFormData>
-      initialValues={{
-        imagePath: null,
-        name: "",
-        email: "",
-        title: "",
-        description: "",
-        ingredients: "",
-        instructions: "",
-      }}
-      validate={validate}
+      enableReinitialize
+      initialValues={defaultValues}
       onSubmit={(values, actions) => handleSubmit(values, actions)}
+      validate={validate}
+      // validateOnBlur={false}
       validateOnChange={false}
-      validateOnBlur={false}
     >
       {({ errors, setFieldValue, isSubmitting }) => (
         <Form>
@@ -61,6 +64,11 @@ export default function RecipeForm() {
             <GridItem colSpan={{ base: 3, lg: 1 }}>
               <ImageUpload
                 error={errors.imagePath?.toString() ?? ""}
+                initialImage={
+                  typeof defaultValues.imagePath === "string"
+                    ? defaultValues.imagePath
+                    : undefined
+                }
                 onChange={(file: File | null) =>
                   setFieldValue("imagePath", file)
                 }
@@ -87,16 +95,29 @@ export default function RecipeForm() {
                   label="INSTRUCTIONS"
                   type="textarea"
                 />
-                <Button
-                  bg="blue.700"
-                  ml="auto"
-                  loading={isSubmitting}
-                  loadingText="Saving"
-                  type="submit"
-                  _hover={{ bg: "blue.900" }}
+                <Flex
+                  alignItems="center"
+                  direction={{ base: "column-reverse", lg: "row" }}
+                  gap={4}
+                  justifyContent="flex-end"
                 >
-                  Save
-                </Button>
+                  {onDelete && (
+                    <DeleteButton
+                      onConfirm={onDelete}
+                      title={defaultValues.title}
+                    />
+                  )}
+                  <Button
+                    bg="blue.700"
+                    loading={isSubmitting}
+                    loadingText="Saving"
+                    type="submit"
+                    w={{ base: "full", lg: "fit-content" }}
+                    _hover={{ bg: "blue.900" }}
+                  >
+                    Save
+                  </Button>
+                </Flex>
               </Flex>
             </GridItem>
           </Grid>
