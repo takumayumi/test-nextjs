@@ -1,4 +1,4 @@
-# Recipe Manager 0 Coding Challenge Submission
+# Recipe Manager - Coding Challenge Submission
 
 This project is a submission for the [test-nextjs](https://github.com/testsecuritybanker/test-nextjs) coding challenge. It is a fully functional recipe CRUD app built with **Next.js 14 (Pages Router)** and **TypeScript**, featuring form validation, local file handling, filtering, and a polished UI.
 
@@ -105,6 +105,6 @@ npm run dev
 [GitHub](https://github.com/takumayumi)  
 [Email](mailto:yumitakuma@outlook.com)
 
-## 📄 License
+## License
 
 MIT
