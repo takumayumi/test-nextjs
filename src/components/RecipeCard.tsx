@@ -4,17 +4,17 @@ import {
   GridItem,
   HStack,
   Icon,
-  IconButton,
   Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
+import { toggleFavorite } from "@/lib";
 import { RecipeCardProps } from "@/types";
 
 export default function RecipeCard(props: RecipeCardProps) {
-  const { isFirst, isLast, onToggleFavorite, recipe } = props;
+  const { isFirst, isLast, recipe } = props;
 
   return (
     <Box
@@ -50,10 +50,15 @@ export default function RecipeCard(props: RecipeCardProps) {
               color="yellow"
               cursor="pointer"
               right={2}
-              onClick={() => onToggleFavorite?.(recipe.id)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFavorite(recipe.id, !recipe.isFavorite);
+              }}
               position="absolute"
-              size="lg"
+              size="2xl"
               top={2}
+              zIndex={1}
             >
               {recipe.isFavorite ? <TiStarFullOutline /> : <TiStarOutline />}
             </Icon>

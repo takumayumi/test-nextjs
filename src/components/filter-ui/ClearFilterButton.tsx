@@ -6,7 +6,7 @@ export default function ClearFiltersButton() {
   const dispatch = useAppDispatch();
 
   return (
-    <Button onClick={() => dispatch(clearFilters())} variant="outline">
+    <Button bg="orange.700" onClick={() => dispatch(clearFilters())}>
       Clear Filters
     </Button>
   );

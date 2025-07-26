@@ -13,13 +13,12 @@ export default function TitleSearch() {
   );
   const [localTerm, setLocalTerm] = useState(searchTerm);
 
-  // Debounced dispatch
   const debouncedSetSearchTerm = debounce((value: string) => {
     dispatch(setSearchTerm(value));
   }, 300);
 
   useEffect(() => {
-    debouncedSetSearchTerm(localTerm);
+    debouncedSetSearchTerm(localTerm ?? "");
 
     return () => {
       debouncedSetSearchTerm.cancel();

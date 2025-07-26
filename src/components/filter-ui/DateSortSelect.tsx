@@ -1,23 +1,21 @@
 import { Field, Portal, Select } from "@chakra-ui/react";
-import { useState } from "react";
 import { dateOptions } from "@/constants/selectOptions";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setSortByDate } from "@/store/slices/filtersSlice";
 import { DateSortOrder } from "@/types";
 
 export default function DateSortSelect() {
   const dispatch = useAppDispatch();
-  const [value, setValue] = useState<DateSortOrder>("date-desc");
+  const value = useAppSelector((state) => state.filters.sortByDate);
 
   return (
     <Field.Root>
       <Field.Label fontWeight="bold">Sort by Date</Field.Label>
       <Select.Root
         collection={dateOptions}
-        value={[value]}
+        value={[value || ""]}
         onValueChange={(e) => {
           const val = e.value[0] as DateSortOrder;
-          setValue(val);
           dispatch(setSortByDate(val));
         }}
       >

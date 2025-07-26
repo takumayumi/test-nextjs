@@ -1,23 +1,21 @@
 import { Field, Portal, Select } from "@chakra-ui/react";
-import { useState } from "react";
 import { titleOptions } from "@/constants/selectOptions";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setSortByTitle } from "@/store/slices/filtersSlice";
 import { TitleSortOrder } from "@/types";
 
 export default function TitleSortSelect() {
   const dispatch = useAppDispatch();
-  const [value, setValue] = useState<TitleSortOrder>("title-desc");
+  const value = useAppSelector((state) => state.filters.sortByTitle);
 
   return (
     <Field.Root>
       <Field.Label fontWeight="bold">Sort by Title</Field.Label>
       <Select.Root
         collection={titleOptions}
-        value={[value]}
+        value={[value || ""]}
         onValueChange={(e) => {
           const val = e.value[0] as TitleSortOrder;
-          setValue(val);
           dispatch(setSortByTitle(val));
         }}
       >

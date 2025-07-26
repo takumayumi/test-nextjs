@@ -20,9 +20,11 @@ const filtersSlice = createSlice({
     },
     setSortByTitle: (state, action: PayloadAction<TitleSortOrder | null>) => {
       state.sortByTitle = action.payload;
+      state.sortByDate = null;
     },
     setSortByDate: (state, action: PayloadAction<DateSortOrder | null>) => {
       state.sortByDate = action.payload;
+      state.sortByTitle = null;
     },
     clearFilters: () => initialState,
   },
@@ -35,5 +37,4 @@ export const {
   setSortByDate,
   clearFilters,
 } = filtersSlice.actions;
-
 export default filtersSlice.reducer;
