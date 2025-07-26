@@ -1,17 +1,25 @@
 import { Field, Portal, Select } from "@chakra-ui/react";
-import { titleOptions } from "@/constants/selectOptions";
 import { useState } from "react";
+import { titleOptions } from "@/constants/selectOptions";
+import { useAppDispatch } from "@/store/hooks";
+import { setSortByTitle } from "@/store/slices/filtersSlice";
+import { TitleSortOrder } from "@/types";
 
 export default function TitleSortSelect() {
-  const [value, setValue] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const [value, setValue] = useState<TitleSortOrder>("title-desc");
 
   return (
     <Field.Root>
       <Field.Label fontWeight="bold">Sort by Title</Field.Label>
       <Select.Root
         collection={titleOptions}
-        value={value}
-        onValueChange={(e) => setValue(e.value)}
+        value={[value]}
+        onValueChange={(e) => {
+          const val = e.value[0] as TitleSortOrder;
+          setValue(val);
+          dispatch(setSortByTitle(val));
+        }}
       >
         <Select.HiddenSelect />
         <Select.Control bg="white" rounded="md">

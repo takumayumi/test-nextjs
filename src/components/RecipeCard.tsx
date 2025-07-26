@@ -3,6 +3,7 @@ import {
   Grid,
   GridItem,
   HStack,
+  Icon,
   IconButton,
   Image,
   Text,
@@ -44,18 +45,18 @@ export default function RecipeCard(props: RecipeCardProps) {
               h="full"
               w="full"
             />
-            <IconButton
+            <Icon
               aria-label="Favorite"
               color="yellow"
               cursor="pointer"
               right={2}
               onClick={() => onToggleFavorite?.(recipe.id)}
               position="absolute"
+              size="lg"
               top={2}
-              variant="plain"
             >
               {recipe.isFavorite ? <TiStarFullOutline /> : <TiStarOutline />}
-            </IconButton>
+            </Icon>
           </GridItem>
           <GridItem colSpan={2} textStyle="sm">
             <VStack alignItems="start" gap={4} px={6} py={4}>

@@ -1,5 +1,10 @@
-import { Button, Flex } from "@chakra-ui/react";
-import { DateSortSelect, FavoriteRadio, TitleSortSelect } from "@/components";
+import { Flex } from "@chakra-ui/react";
+import {
+  ClearFilterButton,
+  DateSortSelect,
+  FavoriteRadio,
+  TitleSortSelect,
+} from "@/components";
 
 export default function FilterBar() {
   return (
@@ -7,7 +12,7 @@ export default function FilterBar() {
       <TitleSortSelect />
       <DateSortSelect />
       <FavoriteRadio />
-      <Button>Clear Filters</Button>
+      <ClearFilterButton />
     </Flex>
   );
 }

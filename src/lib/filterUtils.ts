@@ -2,9 +2,9 @@ import { FilterOptions, RecipeProps } from "@/types";
 
 export function filterRecipes(
   recipes: RecipeProps[],
-  { searchTerm, isFavorite }: FilterOptions
+  { searchTerm, isFavorite, sortByTitle, sortByDate }: FilterOptions
 ): RecipeProps[] {
-  return recipes.filter((recipe) => {
+  let filtered = recipes.filter((recipe) => {
     const matchesTitle =
       !searchTerm ||
       recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -16,4 +16,22 @@ export function filterRecipes(
 
     return matchesTitle && matchesFavorite;
   });
+
+  if (sortByTitle) {
+    filtered = filtered.sort((a, b) =>
+      sortByTitle === "title-asc"
+        ? a.title.localeCompare(b.title)
+        : b.title.localeCompare(a.title)
+    );
+  }
+
+  if (sortByDate) {
+    filtered = filtered.sort((a, b) => {
+      const dateA = new Date(a.dateCreated).getTime();
+      const dateB = new Date(b.dateCreated).getTime();
+      return sortByDate === "date-asc" ? dateA - dateB : dateB - dateA;
+    });
+  }
+
+  return filtered;
 }

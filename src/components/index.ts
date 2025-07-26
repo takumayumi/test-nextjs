@@ -20,6 +20,8 @@ export { default as RecipeForm } from "./RecipeForm";
 export * from "./RecipeForm";
 export { default as RecipeList } from "./RecipeList";
 export * from "./RecipeList";
+export { default as ClearFilterButton } from "./filter-ui/ClearFilterButton";
+export * from "./filter-ui/ClearFilterButton";
 export { default as DateSortSelect } from "./filter-ui/DateSortSelect";
 export * from "./filter-ui/DateSortSelect";
 export { default as FavoriteRadio } from "./filter-ui/FavoriteRadio";
