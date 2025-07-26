@@ -56,8 +56,8 @@ export default function Home() {
           templateColumns="repeat(3, 1fr)"
           gap={{ base: 8, lg: 12 }}
           flex="1"
-          h="100%"
-          w="100%"
+          h="full"
+          w="full"
         >
           <GridItem colSpan={{ base: 3, lg: 1 }}>
             <FilterBar />
@@ -74,11 +74,11 @@ export default function Home() {
                   display: "none",
                 },
               }}
-              h="100%"
-              maxH={contentHeight === 0 ? "100%" : contentHeight}
+              h="full"
+              maxH={contentHeight === 0 ? "full" : contentHeight}
               overflowY="auto"
               p={{ base: 10, lg: 12 }}
-              w="100%"
+              w="full"
             >
               {recipes.length === 0 ? (
                 <NoResults />

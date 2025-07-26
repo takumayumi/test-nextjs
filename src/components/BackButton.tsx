@@ -6,7 +6,7 @@ export default function BackButton() {
   const router = useRouter();
 
   return (
-    <Box mb={{ base: 8, lg: 12 }} w="100%">
+    <Box mb={{ base: 8, lg: 12 }} w="full">
       <Button
         onClick={() => router.back()}
         p={0}

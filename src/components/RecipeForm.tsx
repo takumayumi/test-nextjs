@@ -1,166 +1,107 @@
-import {
-  Box,
-  Button,
-  Field,
-  Flex,
-  Grid,
-  GridItem,
-  Icon,
-  Input,
-  Portal,
-  Textarea,
-} from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Formik, Form, Field } from "formik";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toaster } from "@/components";
-import { RecipeFormData, schema } from "@/types";
-import Image from "next/image";
+import { useState } from "react";
+import { FormField, ImageUpload, toaster } from "@/components";
+import { checkDuplicateTitle, submitRecipeForm, validate } from "@/lib";
+import { RecipeFormData } from "@/types";
 
-export default function RecipeForm({
-  existingTitles = [],
-}: {
-  existingTitles?: string[];
-}) {
-  const [loading, setLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RecipeFormData>({
-    resolver: zodResolver(schema),
-  });
-
+export default function RecipeForm() {
   const router = useRouter();
-  const imageRef = useRef<HTMLInputElement>(null);
+  const [resetKey, setResetKey] = useState<string>("");
 
-  const onSubmit = async (data: RecipeFormData) => {
-    if (existingTitles.includes(data.title)) {
+  const handleSubmit = async (
+    values: RecipeFormData,
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    const isDuplicate = await checkDuplicateTitle(values.title);
+
+    if (isDuplicate) {
       toaster.create({
         type: "error",
-        title: "Title must be unique",
-        description: "Please use a different recipe title.",
+        title: "Duplicate title",
+        description: "A recipe with that title already exists.",
         closable: true,
       });
       return;
     }
 
-    const imageFile = data.image[0];
-    const fileName = `${data.title
-      .replace(/\s+/g, "-")
-      .toLowerCase()}.${imageFile.name.split(".").pop()}`;
-
-    // Simulate upload
-    console.log("Saving image as:", fileName);
-
-    toaster.create({
-      type: "success",
-      title: "Recipe saved!",
-      description: "Your recipe has been added successfully.",
-      closable: true,
-    });
-
-    router.back();
+    try {
+      await submitRecipeForm(values, toaster);
+      resetForm();
+      setResetKey(Date.now().toString());
+    } catch (err) {
+      console.error("Submission error:", err);
+    }
   };
 
   return (
-    <Box as="form" onSubmit={handleSubmit(onSubmit)} width="full">
-      <Grid templateColumns="repeat(3, 1fr)" gap={{ base: 8, lg: 12 }}>
-        <GridItem colSpan={{ base: 3, lg: 1 }} justifyItems="center">
-          <Box
-            alignItems="top"
-            borderRadius={5}
-            cursor="pointer"
-            display="flex"
-            justifyContent="center"
-            onClick={() => imageRef.current?.click()}
-            maxW={{ base: "fit-content", lg: "100%" }}
+    <Formik<RecipeFormData>
+      initialValues={{
+        imagePath: null,
+        name: "",
+        email: "",
+        title: "",
+        description: "",
+        ingredients: "",
+        instructions: "",
+      }}
+      validate={validate}
+      onSubmit={(values, actions) => handleSubmit(values, actions)}
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
+      {({ errors, setFieldValue, isSubmitting }) => (
+        <Form>
+          <Grid
+            templateColumns="repeat(3, 1fr)"
+            gap={{ base: 8, lg: 12 }}
+            w="full"
           >
-            <Image
-              src="/unknown.png"
-              alt="Upload image"
-              width="456"
-              height="400"
-              objectFit="fill"
-            />
-          </Box>
-          <Field.Root>
-            <Input
-              type="file"
-              accept="image/*"
-              hidden
-              {...register("image")}
-              ref={imageRef}
-            />
-            <Field.ErrorText>{errors.image?.message as String}</Field.ErrorText>
-          </Field.Root>
-        </GridItem>
-        <GridItem colSpan={{ base: 3, lg: 2 }}>
-          <Flex direction="column" gap={4}>
-            <Field.Root>
-              <Field.Label>YOUR NAME</Field.Label>
-              <Input placeholder="Text field data" {...register("name")} />
-              <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-            </Field.Root>
-            <Field.Root>
-              <Field.Label>EMAIL ADDRESS</Field.Label>
-              <Input placeholder="Text field data" {...register("email")} />
-              <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
-            </Field.Root>
-            <Field.Root>
-              <Field.Label>TITLE</Field.Label>
-              <Input placeholder="Text field data" {...register("title")} />
-              <Field.ErrorText>{errors.title?.message}</Field.ErrorText>
-            </Field.Root>
-            <Field.Root>
-              <Field.Label>DESCRIPTION</Field.Label>
-              <Textarea
-                {...register("description")}
-                placeholder="Description here"
-                minH={20}
-                rows={4}
+            <GridItem colSpan={{ base: 3, lg: 1 }}>
+              <ImageUpload
+                error={errors.imagePath?.toString() ?? ""}
+                onChange={(file: File | null) =>
+                  setFieldValue("imagePath", file)
+                }
+                resetKey={resetKey}
               />
-              <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
-            </Field.Root>
-            <Field.Root>
-              <Field.Label>INGREDIENTS</Field.Label>
-              <Textarea
-                {...register("ingredients")}
-                placeholder="Description here"
-                minH={20}
-                rows={4}
-              />
-              <Field.ErrorText>{errors.instructions?.message}</Field.ErrorText>
-            </Field.Root>
-            <Field.Root>
-              <Field.Label>INSTRUCTIONS</Field.Label>
-              <Textarea
-                {...register("instructions")}
-                placeholder="Description here"
-                minH={20}
-                rows={4}
-              />
-              <Field.ErrorText>{errors.instructions?.message}</Field.ErrorText>
-            </Field.Root>
-            <Button
-              bg="blue.700"
-              ml="auto"
-              loading={loading}
-              loadingText="Saving"
-              shadow="sm"
-              transition="all 0.2s ease-in-out"
-              type="submit"
-              minW="fit-content"
-              _hover={{
-                bg: "blue.900",
-              }}
-            >
-              Save
-            </Button>
-          </Flex>
-        </GridItem>
-      </Grid>
-    </Box>
+            </GridItem>
+            <GridItem colSpan={{ base: 3, lg: 2 }}>
+              <Flex direction="column" gap={4}>
+                <FormField name="name" label="YOUR NAME" />
+                <FormField name="email" label="EMAIL ADDRESS" />
+                <FormField name="title" label="TITLE" />
+                <FormField
+                  name="description"
+                  label="DESCRIPTION"
+                  type="textarea"
+                />
+                <FormField
+                  name="ingredients"
+                  label="INGREDIENTS"
+                  type="textarea"
+                />
+                <FormField
+                  name="instructions"
+                  label="INSTRUCTIONS"
+                  type="textarea"
+                />
+                <Button
+                  bg="blue.700"
+                  ml="auto"
+                  loading={isSubmitting}
+                  loadingText="Saving"
+                  type="submit"
+                  _hover={{ bg: "blue.900" }}
+                >
+                  Save
+                </Button>
+              </Flex>
+            </GridItem>
+          </Grid>
+        </Form>
+      )}
+    </Formik>
   );
 }

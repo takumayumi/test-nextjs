@@ -39,8 +39,8 @@ export default function RecipeCard(props: RecipeCardProps) {
           <Image
             src={`/images/${recipe.image}`}
             alt={recipe.title}
-            h="100%"
-            w="100%"
+            h="full"
+            w="full"
           />
           <IconButton
             aria-label="Favorite"
@@ -61,7 +61,7 @@ export default function RecipeCard(props: RecipeCardProps) {
               {recipe.title}
             </Text>
             <Text>{recipe.instructions}</Text>
-            <HStack gap={4} justifyContent="space-between" w="100%">
+            <HStack gap={4} justifyContent="space-between" w="full">
               <Text>Added by: {recipe.name}</Text>
               <Text>
                 Date:{" "}

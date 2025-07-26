@@ -8,8 +8,8 @@ import {
 } from "@chakra-ui/react";
 
 export const toaster = createToaster({
-  placement: "bottom-end",
   pauseOnPageIdle: true,
+  placement: "top",
 });
 
 export default function Toaster() {
@@ -17,13 +17,13 @@ export default function Toaster() {
     <Portal>
       <ChakraToaster toaster={toaster} insetInline={{ base: "4", md: "8" }}>
         {(toast) => (
-          <Toast.Root width={{ base: "100%", md: "sm" }}>
+          <Toast.Root width={{ base: "full", md: "sm" }}>
             {toast.type === "loading" ? (
               <Spinner size="sm" color="blue.500" />
             ) : (
               <Toast.Indicator />
             )}
-            <Stack gap="1" flex="1" maxW="100%">
+            <Stack gap="1" flex="1" maxW="full">
               {toast.title && <Toast.Title>{toast.title}</Toast.Title>}
               {toast.description && (
                 <Toast.Description>{toast.description}</Toast.Description>
@@ -32,7 +32,7 @@ export default function Toaster() {
             {toast.action && (
               <Toast.ActionTrigger>{toast.action.label}</Toast.ActionTrigger>
             )}
-            {toast.closable && <Toast.CloseTrigger />}
+            <Toast.CloseTrigger />
           </Toast.Root>
         )}
       </ChakraToaster>

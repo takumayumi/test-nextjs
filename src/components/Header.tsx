@@ -13,14 +13,14 @@ export default function Header(props: HeaderProps) {
       py={{ base: 6, lg: 8 }}
       flex="none"
     >
-      <Container maxWidth="container.xl">
+      <Container maxW="container.xl">
         <Flex direction={{ base: "column", lg: "row" }} gap={4}>
           <Box display={{ base: "none", lg: "block" }} flex="1" />
           <Box display={{ base: "none", lg: "block" }} flex="1" />
           {showSearch ? (
             <TitleSearch />
           ) : (
-            <Box display="block" flex="1" minH="40px" w="100%" />
+            <Box display="block" flex="1" minH="40px" w="full" />
           )}
         </Flex>
       </Container>

@@ -1,41 +1,45 @@
 [
   {
-    "id": "1",
+    "id": "r8kmgs-u4x3j1",
     "name": "Yumi Takuma",
     "email": "yumi@example.com",
     "title": "Tonkatsu",
+    "description": "A beloved Japanese comfort food, tonkatsu features juicy pork cutlets coated in crispy panko breadcrumbs, deep-fried to perfection, and served with tangy tonkatsu sauce.",
     "instructions": "Season pork cutlets with salt and pepper. Coat with flour, then dip in beaten egg, then panko breadcrumbs. Deep-fry at 180°C until golden brown on both sides. Serve with shredded cabbage and tonkatsu sauce.",
-    "image": "tonkatsu.jpg",
+    "imagePath": "tonkatsu.jpg",
     "dateCreated": "2025-07-23T14:00:00.000Z",
     "isFavorite": true
   },
   {
-    "id": "2",
+    "id": "r8kmgs-v7f8p9",
     "name": "Minho Lee",
     "email": "minho@example.kr",
     "title": "Bibimbap",
+    "description": "A colorful and nutritious Korean rice bowl topped with sautéed vegetables, gochujang, and a fried egg — bibimbap is both a visual and culinary delight.",
     "instructions": "Cook rice and prepare assorted vegetables like spinach, bean sprouts, carrots, and mushrooms. Sauté each with sesame oil and garlic. Serve rice in a bowl with toppings, gochujang, and a fried egg. Mix before eating.",
-    "image": "bibimbap.jpg",
+    "imagePath": "bibimbap.jpg",
     "dateCreated": "2025-07-20T17:30:00.000Z",
     "isFavorite": false
   },
   {
-    "id": "3",
+    "id": "r8kmgs-3pz7c4",
     "name": "Liza Dela Cruz",
     "email": "liza@example.ph",
     "title": "Sinigang na Baboy",
+    "description": "A classic Filipino sour soup made with pork and fresh vegetables, sinigang is known for its comforting tamarind-based broth that’s perfect with rice.",
     "instructions": "In a pot, boil pork ribs in water until tender. Skim off scum. Add chopped tomatoes, onions, and gabi (taro). Simmer until gabi is soft. Add tamarind mix or fresh sampalok, followed by radish, eggplant, and string beans. Add kangkong last. Season with fish sauce and serve hot with rice.",
-    "image": "sinigang.jpg",
+    "imagePath": "sinigang.jpg",
     "dateCreated": "2025-07-25T12:15:00.000Z",
     "isFavorite": true
   },
   {
-    "id": "4",
+    "id": "r8kmgs-t1d2l6",
     "name": "Camille Laurent",
     "email": "camille@example.fr",
     "title": "Crème Brûlée",
+    "description": "A French dessert classic with a rich vanilla custard base and a crisp, caramelized sugar topping — crème brûlée is elegance in every spoonful.",
     "instructions": "Preheat oven to 150°C. In a saucepan, heat heavy cream and vanilla until warm. In a bowl, whisk egg yolks with sugar until pale. Slowly mix the warm cream into the yolks. Pour mixture into ramekins. Bake in a water bath for 30–40 minutes until set. Chill, then sprinkle sugar on top and caramelize with a torch before serving.",
-    "image": "creme-brulee.jpg",
+    "imagePath": "creme-brulee.jpg",
     "dateCreated": "2025-07-25T14:05:00.000Z",
     "isFavorite": true
   }
