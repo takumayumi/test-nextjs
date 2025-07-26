@@ -2,6 +2,9 @@ import { Box, Grid, GridItem, useBreakpointValue } from "@chakra-ui/react";
 import debounce from "lodash.debounce";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import recipeData from "@/data/recipes.json";
+import { filterRecipes } from "@/lib";
 import {
   AddButton,
   FilterBar,
@@ -9,11 +12,12 @@ import {
   NoResults,
   RecipeList,
 } from "@/components";
-import recipeData from "@/data/recipes.json";
+import { RootState } from "@/store";
 import { RecipeProps } from "@/types";
 
 export default function Home() {
-  const recipes: RecipeProps[] = recipeData;
+  const filters = useSelector((state: RootState) => state.filters);
+  const recipes: RecipeProps[] = filterRecipes(recipeData, filters);
   const [contentHeight, setContentHeight] = useState(0);
 
   const paddingOffset =
