@@ -32,6 +32,7 @@ export default function RecipeForm(props: RecipeFormProps) {
       try {
         await submitRecipeForm(values, toaster);
         if (!defaultValues.id) router.back();
+        else router.push("/");
       } catch (err) {
         console.error("Submission error:", err);
       }

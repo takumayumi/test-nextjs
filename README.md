@@ -1,40 +1,110 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Recipe Manager 0 Coding Challenge Submission
+
+This project is a submission for the [test-nextjs](https://github.com/testsecuritybanker/test-nextjs) coding challenge. It is a fully functional recipe CRUD app built with **Next.js 14 (Pages Router)** and **TypeScript**, featuring form validation, local file handling, filtering, and a polished UI.
+
+## Tech Stack
+
+| Category             | Library/Tool                | Description                      |
+| -------------------- | --------------------------- | -------------------------------- |
+| **Framework**        | Next.js 14 (Pages Router)   | SSR-enabled React App            |
+| **Language**         | TypeScript                  | Type safety                      |
+| **UI**               | Chakra UI                   | Responsive and accessible design |
+| **State Management** | Redux Toolkit + React-Redux | Global app state (no useContext) |
+| **Forms**            | React Hook Form + Zod       | Validation + schema enforcement  |
+| **Image Upload**     | Formidable                  | Handles file uploads on backend  |
+| **Utils**            | lodash.debounce             | Debouncing                       |
+| **Icons**            | React Icons                 | App icons                        |
+| **Form (extra)**     | Formik                      | Used where appropriate           |
+| **Barrel Files**     | Barrelsby + Chokidar CLI    | Auto-generates index files       |
+
+## Scripts & Tooling
+
+```bash
+npm run dev                         # Run the app in development
+npm run build                       # Build the production bundle
+npm run start                       # Start production server
+npm run lint                        # Run ESLint
+
+# Barrel file generation
+npm run generate:barrels           # Generate index.ts for all folders
+npm run watch:barrels              # Watch + regenerate barrel files on change
+```
+
+> Barrel files are generated using [`barrelsby`](https://www.npmjs.com/package/barrelsby), with watch support via `chokidar-cli`.
+
+## Features
+
+### 1. Recipe List
+
+- Scrollable section (not the entire page)
+- Sortable by **Title** and **Date** (ASC/DESC)
+- Search by **Title** with debounce
+- Filter by **Favorites** (Yes/No checkbox)
+- "Clear Filter" button resets all filters
+- "No Record Found" message when no matches
+
+### 2. Add Recipe
+
+- Fields:
+  - Image (uploaded)
+  - Name
+  - Email (valid format)
+  - Title (must be unique)
+  - Description (optional)
+  - Ingredients
+  - Instructions
+- Validation via **Zod**
+- Image saved to `/public/images/[title].ext`
+- Toast shown on success; redirect to previous page
+
+### 3. Edit Recipe
+
+- Title is read-only
+- Editable fields: all except title
+- Toast/modal on success
+- Redirect to recipe list after update
+
+### 4. Delete Recipe
+
+- Deletion via button
+- Toast on success
+- Redirect to recipe list
+
+## Backend Details
+
+| Endpoint                     | Method | Description             |
+| ---------------------------- | ------ | ----------------------- |
+| `/api/recipes`               | GET    | Fetch all recipes       |
+| `/api/recipes`               | POST   | Add a new recipe        |
+| `/api/recipes/[id]`          | GET    | Fetch recipe by ID      |
+| `/api/recipes/[id]`          | PUT    | Update recipe by ID     |
+| `/api/recipes/[id]/favorite` | PATCH  | Update isFavorite by ID |
+| `/api/upload`                | POST   | Upload recipe image     |
+| `/api/upload`                | POST   | Upload recipe image     |
+
+### Data & Files
+
+- All recipe data stored in: `src/data/recipes.json`
+  > If file does not exist, it will be auto-created.
+- Uploaded images saved under: `/public/images`
+  > If folder does not exist, it will be auto-created.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/takumayumi/test-nextjs
+cd test-nextjs
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Author
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+**Yumi Takuma**  
+[GitHub](https://github.com/takumayumi)  
+[Email](mailto:yumitakuma@outlook.com)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 📄 License
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT
