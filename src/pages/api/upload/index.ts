@@ -44,8 +44,11 @@ export default async function handler(
     const sanitized = sanitizeTitle(title);
     const ext = path.extname(imageFile.originalFilename || ".jpg");
     const newFilename = `${sanitized}${ext}`;
-    const newFilePath = path.join(process.cwd(), "public/images", newFilename);
 
+    const imagesDir = path.join(process.cwd(), "public/images");
+    await fs.mkdir(imagesDir, { recursive: true });
+
+    const newFilePath = path.join(imagesDir, newFilename);
     await fs.rename(imageFile.filepath, newFilePath);
 
     return res.status(200).json({ path: `/images/${newFilename}` });

@@ -1,7 +1,7 @@
 [
   {
     "id": "r8kmgs-u4x3j1",
-    "name": "Yumi Takuma",
+    "name": "Yumi",
     "email": "yumi@example.com",
     "title": "Tonkatsu",
     "description": "A beloved Japanese comfort food, tonkatsu features juicy pork cutlets coated in crispy panko breadcrumbs, deep-fried to perfection, and served with tangy tonkatsu sauce.",
@@ -9,7 +9,8 @@
     "instructions": "Season pork cutlets with salt and pepper. Coat with flour, then dip in beaten egg, then panko breadcrumbs. Deep-fry at 180°C until golden brown on both sides. Serve with shredded cabbage and tonkatsu sauce.",
     "imagePath": "tonkatsu.jpg",
     "dateCreated": "2025-07-23T14:00:00.000Z",
-    "isFavorite": true
+    "isFavorite": false,
+    "lastUpdated": "2025-07-26T13:35:36.977Z"
   },
   {
     "id": "r8kmgs-v7f8p9",
@@ -21,7 +22,7 @@
     "instructions": "Cook rice and prepare assorted vegetables like spinach, bean sprouts, carrots, and mushrooms. Sauté each with sesame oil and garlic. Serve rice in a bowl with toppings, gochujang, and a fried egg. Mix before eating.",
     "imagePath": "bibimbap.jpg",
     "dateCreated": "2025-07-20T17:30:00.000Z",
-    "isFavorite": false
+    "isFavorite": true
   },
   {
     "id": "r8kmgs-3pz7c4",

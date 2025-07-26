@@ -6,8 +6,14 @@ import { RecipeProps } from "@/types";
 const dataPath = path.join(process.cwd(), "src/data/recipes.json");
 
 const getAllRecipes = (): RecipeProps[] => {
+  if (!fs.existsSync(dataPath)) {
+    // Ensure the directory exists too
+    fs.mkdirSync(path.dirname(dataPath), { recursive: true });
+    fs.writeFileSync(dataPath, "[]", "utf8");
+  }
+
   const file = fs.readFileSync(dataPath, "utf8");
-  return JSON.parse(file) as RecipeProps[];
+  return JSON.parse(file);
 };
 
 const saveAllRecipes = (recipes: RecipeProps[]) => {
