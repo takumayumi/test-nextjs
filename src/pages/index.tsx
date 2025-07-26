@@ -3,7 +3,6 @@ import debounce from "lodash.debounce";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import recipeData from "@/data/recipes.json";
 import { filterRecipes } from "@/lib";
 import {
   AddButton,
@@ -14,10 +13,11 @@ import {
 } from "@/components";
 import { RootState } from "@/store";
 import { RecipeProps } from "@/types";
+import { GetServerSideProps } from "next";
 
-export default function Home() {
+export default function Home({ recipes }: { recipes: RecipeProps[] }) {
   const filters = useSelector((state: RootState) => state.filters);
-  const recipes: RecipeProps[] = filterRecipes(recipeData, filters);
+  const filteredRecipes: RecipeProps[] = filterRecipes(recipes, filters);
   const [contentHeight, setContentHeight] = useState(0);
 
   const paddingOffset =
@@ -63,7 +63,10 @@ export default function Home() {
           h="full"
           w="full"
         >
-          <GridItem colSpan={{ base: 3, lg: 1 }}>
+          <GridItem
+            colSpan={{ base: 3, lg: 1 }}
+            display={{ base: "none", lg: "block" }}
+          >
             <FilterBar />
           </GridItem>
           <GridItem colSpan={{ base: 3, lg: 2 }} position="relative">
@@ -84,10 +87,10 @@ export default function Home() {
               p={{ base: 10, lg: 12 }}
               w="full"
             >
-              {recipes.length === 0 ? (
+              {filteredRecipes.length === 0 ? (
                 <NoResults />
               ) : (
-                <RecipeList recipes={recipes} />
+                <RecipeList recipes={filteredRecipes} />
               )}
             </Box>
           </GridItem>
@@ -96,3 +99,25 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const protocol = context.req.headers["x-forwarded-proto"] || "http";
+  const host = context.req.headers.host;
+  const res = await fetch(`${protocol}://${host}/api/recipes`);
+
+  if (!res.ok) {
+    return {
+      props: {
+        recipes: [],
+      },
+    };
+  }
+
+  const data = await res.json();
+
+  return {
+    props: {
+      recipes: data.recipes || [],
+    },
+  };
+};

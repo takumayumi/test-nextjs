@@ -1,4 +1,4 @@
-import { Field, Portal, Select } from "@chakra-ui/react";
+import { Field, Select } from "@chakra-ui/react";
 import { dateOptions } from "@/constants/selectOptions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setSortByDate } from "@/store/slices/filtersSlice";
@@ -20,7 +20,7 @@ export default function DateSortSelect() {
         }}
       >
         <Select.HiddenSelect />
-        <Select.Control bg="white" rounded="md">
+        <Select.Control bg="white" cursor="pointer" rounded="md">
           <Select.Trigger>
             <Select.ValueText placeholder="Select date sort" />
           </Select.Trigger>
@@ -28,18 +28,16 @@ export default function DateSortSelect() {
             <Select.Indicator />
           </Select.IndicatorGroup>
         </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {dateOptions.items.map((item) => (
-                <Select.Item key={item.value} item={item}>
-                  {item.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
+        <Select.Positioner>
+          <Select.Content>
+            {dateOptions.items.map((item) => (
+              <Select.Item key={item.value} item={item}>
+                {item.label}
+                <Select.ItemIndicator />
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Positioner>
       </Select.Root>
     </Field.Root>
   );

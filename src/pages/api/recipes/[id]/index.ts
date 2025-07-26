@@ -74,6 +74,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           description: description?.[0] || "",
           ingredients: ingredients?.[0] || "",
           instructions: instructions?.[0] || "",
+          lastUpdated: new Date().toISOString(),
         };
 
         recipes[index] = updated;

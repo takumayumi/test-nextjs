@@ -1,11 +1,19 @@
-import { Button, CloseButton, Dialog, Portal, chakra } from "@chakra-ui/react";
+import {
+  Button,
+  CloseButton,
+  Dialog,
+  Portal,
+  chakra,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { DeleteButtonProps } from "@/types";
 
 export default function DeleteButton(props: DeleteButtonProps) {
   const { title, onConfirm } = props;
+  // const { onClose } = useDisclosure();
 
   return (
-    <Dialog.Root>
+    <Dialog.Root placement="center">
       <Dialog.Trigger asChild>
         <Button
           bg="orange.700"
@@ -31,7 +39,13 @@ export default function DeleteButton(props: DeleteButtonProps) {
               <Dialog.ActionTrigger asChild>
                 <Button variant="ghost">Cancel</Button>
               </Dialog.ActionTrigger>
-              <Button bg="orange.700" onClick={onConfirm}>
+              <Button
+                bg="orange.700"
+                onClick={() => {
+                  onConfirm();
+                  // onClose();
+                }}
+              >
                 Delete
               </Button>
             </Dialog.Footer>

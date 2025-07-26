@@ -8,7 +8,7 @@ import {
 
 export default function FilterBar() {
   return (
-    <Flex direction={{ base: "row", lg: "column" }} gap={4}>
+    <Flex direction="column" gap={4}>
       <TitleSortSelect />
       <DateSortSelect />
       <FavoriteRadio />

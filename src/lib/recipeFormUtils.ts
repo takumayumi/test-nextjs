@@ -3,14 +3,17 @@ import { toaster } from "@/components";
 import { sanitizeForm } from "@/lib";
 import { RecipeFormData, schema } from "@/types";
 
-export const checkDuplicateTitle = async (title: string): Promise<boolean> => {
+export const checkDuplicateTitle = async (
+  title: string,
+  currentId?: string
+): Promise<boolean> => {
   try {
     const res = await fetch("/api/recipes");
     if (!res.ok) throw new Error("Failed to fetch recipes");
 
     const data = await res.json();
     const isDuplicate = data.recipes.some(
-      (r: RecipeFormData) => r.title === title
+      (r: RecipeFormData) => r.title === title && r.id !== currentId
     );
 
     if (isDuplicate) {
@@ -54,7 +57,7 @@ export const deleteRecipe = async (id: string) => {
 export const submitRecipeForm = async (data: RecipeFormData, toaster: any) => {
   try {
     // Upload image
-    if (!data.id) {
+    if (data.imagePath instanceof File) {
       const uploadForm = new FormData();
       uploadForm.append("imagePath", data.imagePath);
       uploadForm.append("title", data.title);

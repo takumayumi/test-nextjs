@@ -75,6 +75,7 @@ export default async function handler(
         instructions,
         imagePath,
         dateCreated: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
         isFavorite: false,
       };
 

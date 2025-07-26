@@ -8,6 +8,7 @@ export interface RecipeProps {
   ingredients: string;
   instructions: string;
   dateCreated: string;
+  lastUpdated: string;
   isFavorite: boolean;
 }
 

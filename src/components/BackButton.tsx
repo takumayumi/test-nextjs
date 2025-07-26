@@ -8,7 +8,7 @@ export default function BackButton() {
   return (
     <Box mb={{ base: 8, lg: 12 }} w="full">
       <Button
-        onClick={() => router.back()}
+        onClick={() => router.push("/")}
         p={0}
         textStyle="xl"
         variant="plain"

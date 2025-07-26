@@ -1,5 +1,6 @@
 import { InputProps, TextareaProps } from "@chakra-ui/react";
 import { z } from "zod";
+import { RecipeProps } from "@/types";
 
 export const schema = z.object({
   id: z.string().nullable(),
@@ -41,7 +42,7 @@ export const schema = z.object({
 export type RecipeFormData = z.infer<typeof schema>;
 
 export interface RecipeFormProps {
-  initialValues?: Partial<RecipeFormData>;
+  initialValues?: RecipeProps;
   onDelete?: () => void;
 }
 
@@ -49,7 +50,6 @@ export type ImageUploadProps = {
   error?: string;
   initialImage?: string;
   onChange: (files: File | null) => void;
-  resetKey?: string;
 };
 
 export interface FormFieldProps

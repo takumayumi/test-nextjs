@@ -1,4 +1,4 @@
-import { Field, Portal, Select } from "@chakra-ui/react";
+import { Field, Select } from "@chakra-ui/react";
 import { titleOptions } from "@/constants/selectOptions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setSortByTitle } from "@/store/slices/filtersSlice";
@@ -28,18 +28,16 @@ export default function TitleSortSelect() {
             <Select.Indicator />
           </Select.IndicatorGroup>
         </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {titleOptions.items.map((item) => (
-                <Select.Item key={item.value} item={item}>
-                  {item.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
+        <Select.Positioner>
+          <Select.Content>
+            {titleOptions.items.map((item) => (
+              <Select.Item key={item.value} item={item}>
+                {item.label}
+                <Select.ItemIndicator />
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Positioner>
       </Select.Root>
     </Field.Root>
   );

@@ -1,5 +1,5 @@
 import { Button, Flex, Grid, GridItem } from "@chakra-ui/react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { DeleteButton, FormField, ImageUpload, toaster } from "@/components";
@@ -9,7 +9,6 @@ import { RecipeFormData, RecipeFormProps } from "@/types";
 export default function RecipeForm(props: RecipeFormProps) {
   const { initialValues, onDelete } = props;
   const router = useRouter();
-  const [resetKey, setResetKey] = useState<string>("");
 
   const defaultValues = {
     id: null,
@@ -23,23 +22,16 @@ export default function RecipeForm(props: RecipeFormProps) {
     ...initialValues,
   };
 
-  const handleSubmit = async (
-    values: RecipeFormData,
-    { resetForm }: { resetForm: () => void }
-  ) => {
-    let isDuplicate = false;
-    if (!defaultValues.id) {
-      isDuplicate = await checkDuplicateTitle(values.title);
-    }
+  const handleSubmit = async (values: RecipeFormData) => {
+    const isDuplicate = await checkDuplicateTitle(
+      values.title,
+      values?.id ?? undefined
+    );
     if (isDuplicate) return;
 
     try {
       await submitRecipeForm(values, toaster);
-
-      if (!defaultValues.id) {
-        resetForm();
-        setResetKey(Date.now().toString());
-      }
+      if (!defaultValues.id) router.back();
     } catch (err) {
       console.error("Submission error:", err);
     }
@@ -49,9 +41,8 @@ export default function RecipeForm(props: RecipeFormProps) {
     <Formik<RecipeFormData>
       enableReinitialize
       initialValues={defaultValues}
-      onSubmit={(values, actions) => handleSubmit(values, actions)}
+      onSubmit={(values) => handleSubmit(values)}
       validate={validate}
-      // validateOnBlur={false}
       validateOnChange={false}
     >
       {({ errors, setFieldValue, isSubmitting }) => (
@@ -66,20 +57,25 @@ export default function RecipeForm(props: RecipeFormProps) {
                 error={errors.imagePath?.toString() ?? ""}
                 initialImage={
                   typeof defaultValues.imagePath === "string"
-                    ? defaultValues.imagePath
+                    ? `${defaultValues.imagePath}?v=${
+                        initialValues?.lastUpdated ?? Date.now()
+                      }`
                     : undefined
                 }
                 onChange={(file: File | null) =>
                   setFieldValue("imagePath", file)
                 }
-                resetKey={resetKey}
               />
             </GridItem>
             <GridItem colSpan={{ base: 3, lg: 2 }}>
               <Flex direction="column" gap={4}>
                 <FormField name="name" label="YOUR NAME" />
                 <FormField name="email" label="EMAIL ADDRESS" />
-                <FormField name="title" label="TITLE" />
+                <FormField
+                  name="title"
+                  label="TITLE"
+                  readOnly={!!initialValues?.id}
+                />
                 <FormField
                   name="description"
                   label="DESCRIPTION"
