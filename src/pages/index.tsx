@@ -1,8 +1,9 @@
 import { Box, Grid, GridItem, useBreakpointValue } from "@chakra-ui/react";
 import debounce from "lodash.debounce";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { filterRecipes } from "@/lib";
 import {
   AddButton,
@@ -12,10 +13,16 @@ import {
   RecipeList,
 } from "@/components";
 import { RootState } from "@/store";
+import { setRecipes } from "@/store/slices/recipesSlice";
 import { RecipeProps } from "@/types";
-import { GetServerSideProps } from "next";
 
-export default function Home({ recipes }: { recipes: RecipeProps[] }) {
+export default function Home({
+  initialRecipes,
+}: {
+  initialRecipes: RecipeProps[];
+}) {
+  const dispatch = useDispatch();
+  const recipes = useSelector((state: RootState) => state.recipes.items);
   const filters = useSelector((state: RootState) => state.filters);
   const filteredRecipes: RecipeProps[] = filterRecipes(recipes, filters);
   const [contentHeight, setContentHeight] = useState(0);
@@ -43,6 +50,10 @@ export default function Home({ recipes }: { recipes: RecipeProps[] }) {
       debouncedResize.cancel();
     };
   }, [paddingOffset]);
+
+  useEffect(() => {
+    dispatch(setRecipes(initialRecipes));
+  }, [dispatch, initialRecipes]);
 
   return (
     <>
@@ -108,7 +119,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!res.ok) {
     return {
       props: {
-        recipes: [],
+        initialRecipes: [],
       },
     };
   }
@@ -117,7 +128,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      recipes: data.recipes || [],
+      initialRecipes: data.recipes || [],
     },
   };
 };

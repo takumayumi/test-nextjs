@@ -18,7 +18,7 @@ export default function Recipe(props: RecipePageProps) {
   return (
     <>
       <Head>
-        <title>takumayumi | {recipe.title}</title>
+        <title>takumayumi | {`${recipe?.title || "Recipe"}`}</title>
       </Head>
       <Layout>
         <RecipeForm initialValues={recipe} onDelete={handleDelete} />

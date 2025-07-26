@@ -1,9 +1,6 @@
-"use client";
-
 import {
   CloseButton,
   Dialog,
-  Flex,
   IconButton,
   Portal,
   useDisclosure,
@@ -29,11 +26,7 @@ export default function Filter() {
   }, [open, onClose]);
 
   return (
-    <Dialog.Root
-      open={open}
-      onOpenChange={(open) => (open ? onOpen() : onClose())}
-      placement="center"
-    >
+    <Dialog.Root open={open} placement="center">
       <Dialog.Trigger asChild>
         <IconButton
           aria-label="Open filter"
@@ -44,16 +37,26 @@ export default function Filter() {
           <TbFilterFilled />
         </IconButton>
       </Dialog.Trigger>
-
       <Portal>
         <Dialog.Backdrop />
-        <Dialog.Positioner>
-          <Dialog.Content>
+        <Dialog.Positioner
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+        >
+          <Dialog.Content onClick={(e) => e.stopPropagation()}>
             <Dialog.Body pb={8} pt={12} px={8}>
               <FilterBar />
             </Dialog.Body>
-            <Dialog.CloseTrigger asChild>
-              <CloseButton size="sm" position="absolute" top={2} right={2} />
+            <Dialog.CloseTrigger>
+              <CloseButton
+                size="sm"
+                onClick={onClose}
+                position="absolute"
+                top={2}
+                right={2}
+              />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>

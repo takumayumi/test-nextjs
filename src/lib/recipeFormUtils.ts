@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 import { toaster } from "@/components";
-import { sanitizeForm } from "@/lib";
+import { sanitizeForm, sanitizeTitle } from "@/lib";
 import { RecipeFormData, schema } from "@/types";
 
 export const checkDuplicateTitle = async (
@@ -13,7 +13,8 @@ export const checkDuplicateTitle = async (
 
     const data = await res.json();
     const isDuplicate = data.recipes.some(
-      (r: RecipeFormData) => r.title === title && r.id !== currentId
+      (r: RecipeFormData) =>
+        sanitizeTitle(r.title) === sanitizeTitle(title) && r.id !== currentId
     );
 
     if (isDuplicate) {

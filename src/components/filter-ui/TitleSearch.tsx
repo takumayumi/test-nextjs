@@ -25,6 +25,10 @@ export default function TitleSearch() {
     };
   }, [localTerm]);
 
+  useEffect(() => {
+    setLocalTerm(searchTerm);
+  }, [searchTerm]);
+
   return (
     <InputGroup
       endElement={

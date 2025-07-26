@@ -18,13 +18,15 @@ export default function Header(props: HeaderProps) {
           <Box display={{ base: "none", lg: "block" }} flex="1" />
           <Box display={{ base: "none", lg: "block" }} flex="1" />
           {showSearch ? (
-            <TitleSearch />
+            <>
+              <TitleSearch />
+              <Box display={{ base: "block", lg: "none" }}>
+                <FilterButton />
+              </Box>
+            </>
           ) : (
             <Box display="block" flex="1" minH="40px" w="full" />
           )}
-          <Box display={{ base: "block", lg: "none" }}>
-            <FilterButton />
-          </Box>
         </Flex>
       </Container>
     </Box>

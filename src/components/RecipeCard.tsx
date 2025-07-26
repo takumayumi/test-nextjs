@@ -10,11 +10,28 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
+import { useDispatch } from "react-redux";
 import { toggleFavorite } from "@/lib";
+import { updateFavorite } from "@/store/slices/recipesSlice";
 import { RecipeCardProps } from "@/types";
 
 export default function RecipeCard(props: RecipeCardProps) {
   const { isFirst, isLast, recipe } = props;
+  const dispatch = useDispatch();
+
+  const handleToggle = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      dispatch(
+        updateFavorite({ id: recipe.id, isFavorite: !recipe.isFavorite })
+      );
+      await toggleFavorite(recipe.id, !recipe.isFavorite);
+    } catch (error) {
+      console.error("Failed to toggle favorite", error);
+    }
+  };
 
   return (
     <Box
@@ -51,7 +68,7 @@ export default function RecipeCard(props: RecipeCardProps) {
               left="50%"
               objectFit="cover"
               position="absolute"
-              src={`/images/${recipe.imagePath}`}
+              src={`/images/${recipe.imagePath}?v=${recipe.lastUpdated}`}
               top="50%"
               transform="translate(-50%, -50%)"
               w="full"
@@ -61,11 +78,7 @@ export default function RecipeCard(props: RecipeCardProps) {
               color="yellow"
               cursor="pointer"
               right={2}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleFavorite(recipe.id, !recipe.isFavorite);
-              }}
+              onClick={handleToggle}
               position="absolute"
               size="2xl"
               top={2}

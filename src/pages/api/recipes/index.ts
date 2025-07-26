@@ -34,17 +34,26 @@ const generateUniqueId = (): string => {
   return newId;
 };
 
+// Helper to wrap formidable in a Promise
+const parseForm = (
+  req: NextApiRequest
+): Promise<{ fields: formidable.Fields }> => {
+  const form = formidable({ multiples: false });
+  return new Promise((resolve, reject) => {
+    form.parse(req, (err, fields, _files) => {
+      if (err) reject(err);
+      else resolve({ fields });
+    });
+  });
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const form = formidable({ multiples: false });
-
-    form.parse(req, (err, fields) => {
-      if (err) {
-        return res.status(500).json({ success: false, message: "Form error" });
-      }
+    try {
+      const { fields } = await parseForm(req);
 
       const imagePath = sanitizeField(fields.imagePath);
       const name = sanitizeField(fields.name);
@@ -63,6 +72,7 @@ export default async function handler(
         instructions,
       };
 
+      // If there are missing fields, it already ends the response
       getMissingFields(requiredFields, res);
 
       const newRecipe: RecipeProps = {
@@ -84,7 +94,10 @@ export default async function handler(
       saveAllRecipes(allRecipes);
 
       return res.status(201).json({ success: true, recipe: newRecipe });
-    });
+    } catch (error) {
+      console.error("Form parse error:", error);
+      return res.status(500).json({ success: false, message: "Upload failed" });
+    }
   } else if (req.method === "GET") {
     const allRecipes = getAllRecipes();
     return res.status(200).json({ success: true, recipes: allRecipes });

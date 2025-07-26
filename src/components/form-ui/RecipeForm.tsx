@@ -1,7 +1,6 @@
 import { Button, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { DeleteButton, FormField, ImageUpload, toaster } from "@/components";
 import { checkDuplicateTitle, submitRecipeForm, validate } from "@/lib";
 import { RecipeFormData, RecipeFormProps } from "@/types";
@@ -27,13 +26,15 @@ export default function RecipeForm(props: RecipeFormProps) {
       values.title,
       values?.id ?? undefined
     );
-    if (isDuplicate) return;
-
-    try {
-      await submitRecipeForm(values, toaster);
-      if (!defaultValues.id) router.back();
-    } catch (err) {
-      console.error("Submission error:", err);
+    if (isDuplicate) {
+      return;
+    } else {
+      try {
+        await submitRecipeForm(values, toaster);
+        if (!defaultValues.id) router.back();
+      } catch (err) {
+        console.error("Submission error:", err);
+      }
     }
   };
 

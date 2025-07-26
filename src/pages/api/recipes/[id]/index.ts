@@ -1,4 +1,4 @@
-import formidable, { IncomingForm } from "formidable";
+import formidable from "formidable";
 import fs from "fs";
 import path from "path";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -21,9 +21,25 @@ const saveAllRecipes = (recipes: RecipeProps[]) => {
   fs.writeFileSync(dataPath, JSON.stringify(recipes, null, 2), "utf8");
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+// Utility: Promise wrapper for formidable
+const parseForm = (req: NextApiRequest) => {
+  const form = formidable({ multiples: false });
+  return new Promise<{ fields: formidable.Fields; files: formidable.Files }>(
+    (resolve, reject) => {
+      form.parse(req, (err, fields, files) => {
+        if (err) reject(err);
+        else resolve({ fields, files });
+      });
+    }
+  );
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
-    const { method, query, body } = req;
+    const { method, query } = req;
     const id = query.id as string;
 
     if (!id) {
@@ -46,28 +62,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     if (method === "PUT") {
-      const form = new IncomingForm();
-
-      form.parse(req, (err, fields, files) => {
-        if (err) {
-          console.error("Form parsing error:", err);
-          return res.status(500).json({ error: "Form parsing failed" });
-        }
-
-        const id = req.query.id as string;
-        const recipes = getAllRecipes();
-        const index = recipes.findIndex((r) => r.id === id);
-
-        if (index === -1) {
-          return res.status(404).json({ error: "Recipe not found" });
-        }
+      try {
+        const { fields } = await parseForm(req);
 
         const { title, name, email, description, ingredients, instructions } =
           fields;
 
         const updated = {
           ...recipes[index],
-          imagePath: recipes[index].imagePath,
           title: title?.[0] || "",
           name: name?.[0] || "",
           email: email?.[0] || "",
@@ -81,20 +83,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         saveAllRecipes(recipes);
 
         return res.status(200).json({ success: true, recipe: updated });
-      });
-
-      return;
+      } catch (err) {
+        console.error("PUT parse error:", err);
+        return res
+          .status(500)
+          .json({ success: false, message: "Failed to parse form." });
+      }
     }
 
     if (method === "DELETE") {
-      if (index === -1) {
-        return res
-          .status(404)
-          .json({ success: false, message: "Recipe not found." });
-      }
-
       const recipeToDelete = recipes[index];
-      const imageFilename = recipeToDelete.imagePath?.split("/").pop(); // e.g., "my-image.png"
+      const imageFilename = recipeToDelete.imagePath?.split("/").pop();
       const imagePath = path.join(
         process.cwd(),
         "public",
@@ -102,7 +101,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         imageFilename ?? ""
       );
 
-      // Remove the image file if it exists
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
       }
